@@ -1,4 +1,4 @@
 #!/usr/bin/python
-s = eval(input("Enter the string:\n"))
-print(s)
-
+name = input("Enter string")
+result = name[4:-4]
+print("domain name is:" + result)
