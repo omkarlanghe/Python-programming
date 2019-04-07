@@ -143,7 +143,7 @@ class StudentManager:
         return False
 
     def getCourse(self, rollNo):
-        return self.__enrolled_students[roll_no].getCourse()
+        return self.__enrolled_students[rollNo].getCourse()
 
     def updateDivision(self, rollNo, division):
         if rollNo in self.__enrolled_students:
@@ -161,7 +161,6 @@ class unitTestStudentManager():
     sm.AddStudents("avc","pune", "17-04-95", "BE", "A")
     sm.AddStudents("jksdng","pugdsne", "17-02-95", "BE", "A")
 
-
     print("######### Displaying Enrolled students ###########")
     students = sm.getEnrolledStudents()
     for st in students:
@@ -174,28 +173,91 @@ class unitTestStudentManager():
         print(students[st])
 
     print("*************Displaying suspended students***************\n");
-    students = sm.GetSuspendedStudents()
+    students = sm.getSuspendedStudents()
     for st in students:
         print(students[st])
-    print(sm.GetMarks(2))
+    print(sm.getMarks(2))
     sm.updateMarks(1, "Science", 45)
     print(sm.getMarks(2))
     print(sm.getCourse(2))
     sm.updateCourse(2, "Science")
     print(sm.getCourse(2))
 
+def Menu():
+    choice = eval(input("Enter your choice:\n"))
+    return choice
+
+def StudentDetailMenu():
+    choice = eval(input("Enter your choice to update student details:\n"))
+    return choice
+
 class StudentManagementSystem():
-    n = 10 #accept from user
+    n = eval(input("Enter number of students:\n"))
     sm = StudentManager(n)
+
+    print("******** welcome to student management system ***********\n")
+    print("1.Enroll Student\n2. Suspend Student\n3. Print All Student\n4. Print Enrolled Students with Percentage\n5.Print Suspended students\n6. Update Student details\n7. Exit\n")
+
     while True:
         ch = Menu()
-        #if - elif to handle choices
+        #if-elif choice
+        if ch == 1:
+            print("Enroll Student\n");
+            name = input("Enter name of the student\n")
+            address = input("Enter addess of the student\n")
+            dob = input("Enter birth date of the student\n")
+            course = input("Enter the course of the student:\n")
+            div = input("Enter student division:\n")
+
+            sm.AddStudents(name, address, dob, course, div)
+        
+        elif ch == 2:
+            print("Suspend Student\n");
+        
+        elif ch == 3:
+            print("displaying details of all students present in this system:\n")
+            students = sm.getEnrolledStudents()
+            for st in students:
+                print(students[st])
+
+        elif ch == 4:
+            print("Print enrolled students with percentage\n")
+        elif ch == 5:
+            print("Print Suspended students\n")
+        elif ch == 6:
+            print("Update student details\n")
+            choice = StudentDetailMenu()
+            
+            if choice == 1:
+                rollNo = input("Enter roll nummber of the student:\n")
+                address = input("Enter Address to update:\n")
+                sm.updateAddress(rollNo, address)
+                print("Address successfully updated\n")
+
+            elif choice == 2:
+                rollNo = input("Enter roll number of the student:\n")
+                division = input("Enter the division to be updated:\n")
+                sm.updateDivision(rollNo, division)
+                print("Division successfully updated\n")
+
+            elif choice == 3:
+                rollNo = input("Enter roll number of the student:\n")
+                course = input("Enter the course to update:\n")
+                sm.updateCourse(rollNo, course)
+                print("Course successfully updated\n")
+
+            elif choice == 4:
+                rollNo = input("Enter roll number of the student:\n")
+                subject = input("Enter Subject:\n")
+                marks = input("Enter marks to update:\n")
+                sm.updateMarks(rollNo, subject, marks)
+                print("Marks successfully updated\n")
+
+        elif ch == 7:
+            print("Exiting from system..!")
 
 def main():
-    #unitTest()
-    #StudentManagementSystem()
-    unitTestStudentManager()
-     
+    StudentManagementSystem()
 if __name__ == '__main__':
     main()
 
